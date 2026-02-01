@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Account Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js" defer></script>
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <div>
+                <h1>Steam Account Tracker</h1>
+                <p>Lokales Dashboard für mehrere Steam-Accounts.</p>
+            </div>
+            <form class="add-form" action="{{ url_for('add_account') }}" method="post">
+                <input type="text" name="account_input" placeholder="SteamID64, /profiles/ oder /id/" required>
+                <button type="submit" class="primary">Account hinzufügen</button>
+            </form>
+        </header>
+
+        <section id="accounts" class="accounts" data-reorder-url="{{ url_for('reorder_accounts') }}">
+            {% for account in accounts %}
+            <article class="card" data-id="{{ account.id }}">
+                <div class="card-header">
+                    <div class="avatar">
+                        {% if account.avatar_url %}
+                        <img src="{{ account.avatar_url }}" alt="Avatar {{ account.persona_name or account.steamid64 }}">
+                        {% else %}
+                        <div class="avatar-placeholder">?</div>
+                        {% endif %}
+                    </div>
+                    <div class="account-info">
+                        <h2>{{ account.persona_name or account.steamid64 or account.input_raw }}</h2>
+                        <p class="muted">{{ account.steamid64 or account.input_raw }}</p>
+                        {% if account.profile_url %}
+                        <a href="{{ account.profile_url }}" target="_blank" rel="noopener noreferrer">Steam-Profil öffnen</a>
+                        {% endif %}
+                        {% if account.info_warning %}
+                        <p class="warning">Steam-Infos konnten nicht geladen werden.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="tasks">
+                    <form action="{{ url_for('toggle_task', account_id=account.id, task_name='weekly_drop_done') }}" method="post">
+                        <button type="submit" class="task-button {{ 'done' if account.weekly_drop_done else 'pending' }}">
+                            Weekly Drop
+                        </button>
+                    </form>
+                    <form action="{{ url_for('toggle_task', account_id=account.id, task_name='near_levelup_done') }}" method="post">
+                        <button type="submit" class="task-button {{ 'done' if account.near_levelup_done else 'pending' }}">
+                            Kurz vor Level up!
+                        </button>
+                    </form>
+                </div>
+
+                <form class="level-form" action="{{ url_for('update_level', account_id=account.id) }}" method="post">
+                    <label>
+                        CS2 Profil Level
+                        <input type="text" name="cs2_level_note" value="{{ account.cs2_level_note }}" placeholder="z.B. 38">
+                    </label>
+                    <button type="submit" class="secondary">Speichern</button>
+                </form>
+
+                <div class="actions">
+                    <form action="{{ url_for('refresh_account', account_id=account.id) }}" method="post">
+                        <button type="submit" class="secondary">Steam-Infos aktualisieren</button>
+                    </form>
+                    <form action="{{ url_for('delete_account', account_id=account.id) }}" method="post">
+                        <button type="submit" class="danger">Account löschen</button>
+                    </form>
+                </div>
+            </article>
+            {% else %}
+            <div class="empty-state">
+                <p>Noch keine Accounts. Füge oben einen Account hinzu.</p>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>
