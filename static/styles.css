@@ -1,0 +1,226 @@
+:root {
+    color-scheme: dark;
+    --bg: #10161c;
+    --card: #18212a;
+    --card-border: #253241;
+    --text: #e6eef8;
+    --muted: #9fb2c8;
+    --accent: #66c0f4;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+    --warning: #f1c40f;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", "Inter", sans-serif;
+    background: radial-gradient(circle at top, #1c2733, #0f141a 55%);
+    color: var(--text);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
+}
+
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.header h1 {
+    margin: 0 0 8px;
+    font-size: 2.1rem;
+}
+
+.header p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.add-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    background: var(--card);
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid var(--card-border);
+}
+
+.add-form input {
+    background: #0e151c;
+    border: 1px solid #2c3a47;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--text);
+    min-width: 260px;
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.1s ease, filter 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+}
+
+button.primary {
+    background: var(--accent);
+    color: #08243a;
+}
+
+button.secondary {
+    background: #2a3a4a;
+    color: var(--text);
+}
+
+button.danger {
+    background: #55252a;
+    color: #ffb4b4;
+}
+
+.accounts {
+    display: grid;
+    gap: 20px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
+    display: grid;
+    gap: 16px;
+}
+
+.card-header {
+    display: flex;
+    gap: 16px;
+}
+
+.avatar img {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    border: 2px solid #2f3f51;
+}
+
+.avatar-placeholder {
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: #202b36;
+    color: var(--muted);
+    font-size: 1.5rem;
+}
+
+.account-info h2 {
+    margin: 0 0 6px;
+    font-size: 1.3rem;
+}
+
+.account-info a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.muted {
+    color: var(--muted);
+    margin: 0 0 6px;
+}
+
+.warning {
+    color: var(--warning);
+    margin-top: 8px;
+    font-size: 0.95rem;
+}
+
+.tasks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.task-button {
+    padding: 12px 18px;
+    border-radius: 10px;
+    min-width: 160px;
+    text-align: center;
+}
+
+.task-button.pending {
+    background: rgba(231, 76, 60, 0.2);
+    color: var(--danger);
+    border: 1px solid rgba(231, 76, 60, 0.5);
+}
+
+.task-button.done {
+    background: rgba(46, 204, 113, 0.2);
+    color: var(--success);
+    border: 1px solid rgba(46, 204, 113, 0.6);
+}
+
+.level-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.level-form input {
+    margin-top: 6px;
+    display: block;
+    width: 220px;
+    padding: 10px 12px;
+    background: #0e151c;
+    border: 1px solid #2c3a47;
+    border-radius: 8px;
+    color: var(--text);
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    border: 1px dashed #2c3a47;
+    border-radius: 16px;
+    color: var(--muted);
+}
+
+@media (max-width: 720px) {
+    .card-header {
+        flex-direction: column;
+    }
+
+    .add-form {
+        width: 100%;
+    }
+
+    .tasks {
+        flex-direction: column;
+    }
+}
